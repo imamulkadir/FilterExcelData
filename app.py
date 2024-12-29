@@ -87,8 +87,8 @@ def index():
         date_counts=date_counts.to_html(classes='table table-striped'),
         top_days=top_days.to_html(classes='table table-striped'),
         lowest_days=lowest_days.to_html(classes='table table-striped'),
-        clients=["Barclays", "Other"],
-        years=["All", "2020", "2021", "2022", "2023", "2024"],
+        clients=["All","Barclays", "Bank of America Corp.", "Citi Group", "BofA", "Other"],
+        years=["All", "2022", "2023", "2024", "2025", "2026"],
         months=["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     )
 
