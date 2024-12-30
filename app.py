@@ -2,9 +2,20 @@ import os
 import pandas as pd
 from flask import Flask, render_template, request, flash
 from datetime import datetime
+import logging
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Make sure to set a secure secret key
+
+# Error handler to catch all errors
+@app.errorhandler(Exception)
+def handle_error(error):
+    # Log the full error for debugging purposes
+    app.logger.error(f"An error occurred: {error}")
+
+    # Return a user-friendly error message
+    return render_template('error.html', error_message="Something went sideways. Let's blame it on the weather. Try again?"), 500
+
 
 UPLOAD_FOLDER = "uploads"
 if not os.path.exists(UPLOAD_FOLDER):

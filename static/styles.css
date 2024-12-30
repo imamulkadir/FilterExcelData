@@ -15,7 +15,6 @@ body {
 }
 
 label, button {
-    margin-right: 10px;
     margin-left: 10px;
 }
 
@@ -26,6 +25,7 @@ h5{
 select, input, label {
     padding: 5px;
     border-radius: 5px;
+    margin: 0;
 }
 
 button {

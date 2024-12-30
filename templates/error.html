@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Occurred</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Error Popup -->
+        <div class="alert alert-danger mt-5" role="alert" id="error-popup">
+            <strong>Error:</strong> {{ error_message }}
+        </div>
+    </div>
+
+    <script>
+        // Automatically hide the error message after a few seconds
+        setTimeout(function() {
+            document.getElementById('error-popup').style.display = 'none';
+            window.location.href = '/';
+        }, 5000);  // Hide after 5 seconds
+    </script>
+</body>
+</html>
