@@ -96,21 +96,30 @@
         </h3>
 
         <div class="row customData">
-            <div class="col-md-4">
-                <!-- Show Top 10 Filing Days -->
+            <div class="col-md-3">
+                <!-- Show Top 12 Filing Days -->
                 <h5 class="mt-4">Peak Filing Days</h5>
                 
                 <div class="table-responsive text-center">
                     {{ top_days|safe }}
                 </div>
             </div>
-            <div class="col-md-4">
-                <!-- Show Lowest 10 Filing Days -->
+            <div class="col-md-3">
+                <!-- Show Lowest 12 Filing Days -->
                 <h5 class="mt-4">Quiet Filing Days</h5>
                 <div class="table-responsive ">
-                
-                <div class="table-responsive text-center center-header">
-                    {{ lowest_days|safe }}
+                    <div class="table-responsive text-center center-header">
+                        {{ lowest_days|safe }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <!-- Show Top Filing Months-->
+                <h5 class="mt-4">Top Filing Months</h5>
+                <div class="table-responsive ">
+                    <div class="table-responsive text-center center-header">
+                        {{ top_months|safe }}
+                    </div>
                 </div>
             </div>
         </div>

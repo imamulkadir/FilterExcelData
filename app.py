@@ -10,10 +10,7 @@ app.secret_key = "your_secret_key"  # Make sure to set a secure secret key
 # Error handler to catch all errors
 @app.errorhandler(Exception)
 def handle_error(error):
-    # Log the full error for debugging purposes
     app.logger.error(f"An error occurred: {error}")
-
-    # Return a user-friendly error message
     return render_template('error.html', error_message="Something went sideways. Let's blame it on the weather. Try again?"), 500
 
 
@@ -24,11 +21,12 @@ if not os.path.exists(UPLOAD_FOLDER):
 # Function to process the CSV and return date counts
 def process_files(file_paths, client, year, month):
     combined_date_counts = pd.DataFrame()
+    top_months = pd.DataFrame()
 
     for file_path in file_paths:
         try:
             # Read the CSV file
-            df = pd.read_csv(file_path, encoding='ISO-8859-1')  # Use a different encoding if necessary
+            df = pd.read_csv(file_path, encoding='ISO-8859-1')
         except UnicodeDecodeError:
             flash(f"Error reading the file {os.path.basename(file_path)}. Please check the file encoding.", "error")
             continue
@@ -39,7 +37,7 @@ def process_files(file_paths, client, year, month):
         # Strip leading/trailing spaces from column names
         df.columns = df.columns.str.strip()
 
-        # Find all columns that have date-like values
+        # Find all columns with date-like values
         date_columns = df.columns[df.apply(pd.to_datetime, errors='coerce').notna().any()]
         if len(date_columns) == 0:
             flash(f"No date-like columns found in {os.path.basename(file_path)}.", "error")
@@ -47,6 +45,14 @@ def process_files(file_paths, client, year, month):
 
         # Flatten the dataframe to extract all the dates from date-like columns
         all_dates = pd.to_datetime(df[date_columns].stack(), errors='coerce').dropna()
+
+        # Exclude dates outside a reasonable range (e.g., between 1900 and the current year)
+        valid_date_range = (all_dates >= pd.Timestamp('2022-01-01')) & (all_dates <= pd.Timestamp.now())
+        all_dates = all_dates[valid_date_range]
+
+        if all_dates.empty:
+            flash(f"No valid date entries found in {os.path.basename(file_path)}.", "error")
+            continue
 
         # Count the occurrences of each date
         date_counts = all_dates.value_counts().reset_index(name='Total Filings')
@@ -71,36 +77,43 @@ def process_files(file_paths, client, year, month):
     if not combined_date_counts.empty:
         combined_date_counts = combined_date_counts.groupby('Date', as_index=False).sum()
 
-    # Format the Date column to exclude time
-    combined_date_counts['Date'] = combined_date_counts['Date'].dt.date
+    # Extract the month and year from the Date column
+    combined_date_counts['Year'] = pd.to_datetime(combined_date_counts['Date']).dt.year
+    combined_date_counts['Month'] = pd.to_datetime(combined_date_counts['Date']).dt.month_name()
+
+    # Sort months by filing count within each year
+    if year == "All":
+        # When "All" years are selected, sort by filing count without combining months
+        top_months = combined_date_counts.groupby(['Year', 'Month'], as_index=False)['Total Filings'].sum()
+        top_months = top_months.sort_values(by=['Total Filings'], ascending=False).head(12)
+    else:
+        # When a specific year is selected, group by month and sort by filing count
+        top_months = combined_date_counts.groupby(['Month'], as_index=False)['Total Filings'].sum()
+        top_months = top_months.sort_values(by='Total Filings', ascending=False).head(12)
 
     # Get the top 10 filing days with the most filings
-    top_days = combined_date_counts.nlargest(10, 'Total Filings')
+    top_days = combined_date_counts.nlargest(12, 'Total Filings')
 
     # Get the lowest 10 filing days with the fewest filings
-    lowest_days = combined_date_counts.nsmallest(10, 'Total Filings')
+    lowest_days = combined_date_counts.nsmallest(12, 'Total Filings')
 
-    return combined_date_counts, top_days, lowest_days
+    return combined_date_counts, top_days, lowest_days, top_months
+
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # Default values
-    date_counts, top_days, lowest_days = pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
-    total_filings = 0  # Default value for total filings
-    selected_filters = {"client": "All", "year": "All", "month": "All"}  # Default filter values
+    date_counts, top_days, lowest_days, top_months = pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
+    total_filings = 0
+    selected_filters = {"client": "All", "year": "All", "month": "All"}
 
     if request.method == "POST":
-        # Retrieve form data
-        files = request.files.getlist("files")  # Use getlist to allow multiple file selection
+        files = request.files.getlist("files")
         client = request.form.get("client")
         year = request.form.get("year")
         month = request.form.get("month")
-        
-        # Store the selected filters
         selected_filters = {"client": client, "year": year, "month": month}
 
-        # Save the files temporarily to process them
         file_paths = []
         for file in files:
             if file:
@@ -108,30 +121,26 @@ def index():
                 file.save(file_path)
                 file_paths.append(file_path)
 
-        # Filter files based on the selected client
         if client != "All":
             file_paths = [file_path for file_path in file_paths if os.path.basename(file_path).startswith(client)]
 
         if not file_paths:
             flash("No matching files found for the selected client.", "error")
         else:
-            # Process the files
-            date_counts, top_days, lowest_days = process_files(file_paths, client, year, month)
-
-            # Calculate total filings
+            date_counts, top_days, lowest_days, top_months = process_files(file_paths, client, year, month)
             total_filings = date_counts['Total Filings'].sum()
 
-    # Render the template with the results
     return render_template(
         "index.html",
-        total_filings=total_filings,  # Pass total filings to the template
-        date_counts=date_counts.to_html(classes='table table-striped ', index=False), header=False if not date_counts.empty else "",
-        top_days=top_days.to_html(classes='table table-striped ', index=False, header=False) if not top_days.empty else "",
-        lowest_days=lowest_days.to_html(classes='table table-striped ', index=False, header=False) if not lowest_days.empty else "",
+        total_filings=total_filings,
+        date_counts=date_counts.to_html(classes='table table-striped', index=False) if not date_counts.empty else "",
+        top_days=top_days[['Date', 'Total Filings']].to_html(classes='table table-striped', index=False, header=False) if not top_days.empty else "",
+        lowest_days=lowest_days[['Date', 'Total Filings']].to_html(classes='table table-striped', index=False, header=False) if not lowest_days.empty else "",
+        top_months=top_months.to_html(classes='table table-striped', index=False, header=False) if not top_months.empty else "",
         clients=["All", "Barclays", "Bank of America Corp.", "Citi Group", "BofA", "Other"],
         years=["All", "2022", "2023", "2024", "2025", "2026"],
         months=["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        selected_filters=selected_filters  # Pass the selected filters to the template
+        selected_filters=selected_filters
     )
 
 
