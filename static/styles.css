@@ -39,6 +39,12 @@ p {
     opacity: 50%;
 }
 
+#loader {
+    margin-top: 0px;
+    text-align: center;
+}
+
+
 /* Buttons */
 button {
     color: #FFFFFF; /* White text */
