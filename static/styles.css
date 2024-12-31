@@ -1,10 +1,9 @@
 /* General Styling */
 body {
-    background-color: #faf3e9;
-    color: rgb(22, 22, 22);
+    background: #F0F7FF; /* Light gray-blue */
+    color: #333333; /* Dark gray for text */
     font-family: "Ubuntu", serif;
     font-weight: 400;
-    font-style: normal;
 }
 
 .customData {
@@ -18,263 +17,179 @@ label, button {
     margin-left: 10px;
 }
 
-h5{
+h5, h1 {
     text-align: center;
 }
 
-select, input, label {
-    padding: 5px;
+h1 {
+    color: #FFFFFF; /* White text */
+    background: #5C88DA; /* Primary blue */
     border-radius: 5px;
-    margin: 0;
+    padding: 10px;
 }
 
-button {
-    color: #faf3e9;
-    background-color: #29629b;
-    border: 1px solid #f8f9fa;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    width: 10%;
-}
-
-button:hover {
-    background-color: #043769;
+h5 {
+    color: #333333; /* Dark gray */
 }
 
 p {
     margin-top: 10px;
+    font-style: italic;
+    color: #07131f;
+    opacity: 50%;
 }
 
-th {
-    text-align: center;
+/* Buttons */
+button {
+    color: #FFFFFF; /* White text */
+    background-color: #5C88DA; /* Primary blue */
+    border: none; /* Slightly darker blue for borders */
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-/* Custom file upload button */
+button:hover {
+    background-color: #FFA500; /* Accent orange */
+    border-color: #FF8C00; /* Darker orange */
+}
+
+/* Inputs and Dropdowns */
+select, input, label {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
 input[type="file"] {
     display: none;
 }
 
+select:focus, input:focus {
+    border-color: #0056B3; /* Primary blue on focus */
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5); /* Subtle blue glow */
+}
+
+/* Custom File Upload */
 .custom-file-upload {
-    border: 1px solid #ccc;
-    background-color: #f8f8f8;
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF; /* White background */
     padding: 10px 20px;
     display: inline-block;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     border-radius: 4px;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
 }
 
 .custom-file-upload:hover {
-    background-color: #e2e2e2;
+    background-color: #F0F7FF; /* Light gray-blue */
 }
 
 #file-name {
-    margin-left: 10px;
-    font-size: 14px;
-    color: #333;
     padding-top: 10px;
+    margin-left: 2px;
+    font-size: 14px;
 }
 
-/* Centered table */
+/* Tables */
 .table-responsive {
-    margin-bottom: 20px;
-}
-
-.center-header th {
-    text-align: center;
-}
-
-/* Container for centering content horizontally */
-.header-container {
-    display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Vertically center within the container */
-    flex-direction: column; /* Stack the logo and h1 vertically */
-    margin: 10px 0; /* Add some space around the container */
-}
-
-/* Styling for h1 */
-h1 {
-    color: whitesmoke;
-    background-color: #3c3c3c;
+    background: #FFFFFF; /* White table background */
     border-radius: 5px;
-    padding: 5px;
-    display: inline-block;
-    width: auto;
-    text-align: center; /* Center text inside the h1 */
-    margin-top: 10px; /* Optional: Add some space between the logo and the text */
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-/* Media Queries for smaller devices */
+th {
+    background-color: #0056B3; /* Primary blue */
+    color: #FFFFFF; /* White text */
+    text-align: center;
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #F7FAFD; /* Light gray-blue for even rows */
+}
+
+tr:nth-child(odd) {
+    background-color: #FFFFFF; /* White for odd rows */
+}
+/* Enhanced Media Queries */
+
+/* Large screens (default styles are assumed for >1200px) */
 @media (max-width: 1200px) {
     .customData {
         flex-direction: row;
         align-items: center;
     }
-
     button {
-        width: 40%; /* Make button size smaller for medium screens */
-    }
-
-    .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .table-responsive {
-        max-height: none;
+        width: 40%;
     }
 }
 
-/* For tablets (max-width: 768px) */
-@media (max-width: 768px) {
+/* Tablets (max-width: 992px) */
+@media (max-width: 992px) {
     h1 {
-        font-size: 1.5rem; /* Smaller title on tablets */
-    }
-
-    .container {
-        padding: 10px;
-    }
-
-    label, select, input, button {
-        width: 60%;
-    }
-    
-    label, select{
-        margin: 0;
+        font-size: 1.8rem;
     }
     .customData {
-        flex-direction: row;
-        align-items: center;
+        gap: 10px;
     }
+    select, input, label {
+        width: 70%;
+    }
+}
 
+/* Smaller tablets and large phones (max-width: 768px) */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    label, select, input {
+        font-size: 14px;
+        padding: 6px;
+    }
+    button {
+        width: 50%;
+    }
     .custom-file-upload {
         padding: 8px 16px;
     }
-
-    #file-name {
-        font-size: 13px;
-        margin: 0;
-        padding: 0;
-    }
-
-    .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
-        margin-bottom: 10px;
-    }
-
-    /* Reduce the padding and font size in tables */
-    .table-responsive {
-        margin-bottom: 5px;
-    }
-
-    h5 {
-        font-size: 1.2rem;
-    }
-
-    .row.customData {
-        margin-top: 5px;
-    }
 }
 
-/* For mobile devices (max-width: 576px) */
+/* Mobile phones (max-width: 576px) */
 @media (max-width: 576px) {
     h1 {
-        font-size: 1.25rem; /* Smaller title for mobile */
+        font-size: 1.25rem;
     }
-
     button {
         width: 80%;
         padding: 10px;
     }
-
-    label, select, input {
+    select, input, label {
         font-size: 12px;
-        padding: 6px;
     }
-
-    .customData {
-        padding: 10px;
-        flex-direction: column;
-    }
-
-    .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-
     .table-responsive {
-        padding: 10px;
         max-width: 100%;
         overflow-x: auto;
     }
-
-    .custom-file-upload {
-        padding: 8px 16px;
-    }
-
-    #file-name {
-        font-size: 12px;
-    }
-
-    p {
-        font-size: 14px;
-        text-align: center;
-    }
-
-    /* For the tables: Make the font size a little smaller */
-    th, td {
-        font-size: 14px;
-    }
 }
 
-/* Extra small screens (max-width: 480px) */
+/* Extra small devices (max-width: 480px) */
 @media (max-width: 480px) {
     h1 {
-        font-size: 1.2rem; /* Very small font size for mobile screens */
-    }
-
-    .container {
-        padding: 5px;
-    }
-
-    button {
-        padding: 8px;
-    }
-
-    label, select, input {
-        font-size: 11px;
-        padding: 5px;
-    }
-
-    .table-responsive {
-        padding: 5px;
-    }
-
-    h5 {
         font-size: 1rem;
     }
-
-    .custom-file-upload {
-        font-size: 12px;
-        padding: 8px 12px;
-    }
-
-    #file-name {
+    label, select, input, button {
+        width: 90%;
         font-size: 11px;
     }
-
-    p {
-        font-size: 12px;
+    .custom-file-upload {
+        padding: 8px 12px;
     }
-
-    /* Smallest tables - make text even smaller */
-    th, td {
-        font-size: 12px;
+    .table-responsive {
+        margin-bottom: 5px;
     }
 }
