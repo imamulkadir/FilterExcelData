@@ -45,7 +45,7 @@
     />
   </head>
   <body>
-    <div class="login-status">
+    <div class="login-status" >
       {% if session.get('username') %}
         <p class="username">{{ session['username'] }}</p>
         <a href="{{ url_for('logout') }}">Logout</a>

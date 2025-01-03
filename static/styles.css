@@ -152,6 +152,9 @@ tr:nth-child(odd) {
   top: 5px;
   right: 10px;
   font-size: 16px;
+  color: whitesmoke;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .login-status a {
@@ -173,6 +176,7 @@ tr:nth-child(odd) {
 
 .username {
   font: 800 16px "Ubuntu", sans-serif;
+  color: #ef3340;
 }
 
 /* Enhanced Media Queries */
