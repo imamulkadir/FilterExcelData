@@ -15,7 +15,7 @@ load_dotenv()
 # Access credentials from environment variables
 USERS = {
     os.getenv("USERNAME_IMAMUL"): os.getenv("PASSWORD_IMAMUL"),
-    os.getenv("USERNAME_HABIB"): os.getenv("PASSWORD_HABIB"),
+    os.getenv("USERNAME_WSD"): os.getenv("PASSWORD_WSD"),
     os.getenv("USERNAME_USER2"): os.getenv("PASSWORD_USER2")
 }
 
