@@ -4,16 +4,19 @@ from flask import Flask, render_template, request, flash
 from datetime import datetime
 import logging
 from flask import session, redirect, url_for
-
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Make sure to set a secure secret key
 
-# User credentials dictionary
+# Load environment variables from .env file
+load_dotenv()
+
+# Access credentials from environment variables
 USERS = {
-    "imamul": "imamul",
-    "habib": "habib",
-    "user2": "secret"
+    os.getenv("USERNAME_IMAMUL"): os.getenv("PASSWORD_IMAMUL"),
+    os.getenv("USERNAME_HABIB"): os.getenv("PASSWORD_HABIB"),
+    os.getenv("USERNAME_USER2"): os.getenv("PASSWORD_USER2")
 }
 
 # Login page route
