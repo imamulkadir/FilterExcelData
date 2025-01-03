@@ -14,8 +14,9 @@ load_dotenv()
 
 # Access credentials from environment variables
 USERS = {
-    "admin": "1234",  # username: password
-    "user1": "mypassword"
+    os.getenv("USERNAME_IMAMUL"): os.getenv("PASSWORD_IMAMUL"),
+    os.getenv("USERNAME_HABIB"): os.getenv("PASSWORD_HABIB"),
+    os.getenv("USERNAME_USER2"): os.getenv("PASSWORD_USER2")
 }
 
 # Login page route
