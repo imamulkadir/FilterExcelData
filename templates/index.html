@@ -1,162 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Client Filing Insights</title>
 
     <!-- Favicon Link -->
-    <link rel="icon" type="image/ico" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}" sizes="32x32" type="image/png">
-    <link rel="icon" href="{{ url_for('static', filename='favicon-16x16.png') }}" sizes="16x16" type="image/png">
+    <link
+      rel="icon"
+      type="image/ico"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon-32x32.png') }}"
+      sizes="32x32"
+      type="image/png"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon-16x16.png') }}"
+      sizes="16x16"
+      type="image/png"
+    />
 
-    
     <!-- Add Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
     <!-- Google Font Import -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> 
-
-        
-</head>
-<body>
-    <div class="container mt-2">
-    
-        <div class="header-container">
-            <h1>Client Filing Insights - WSD</h1>
-        </div>
-        
-        <form method="POST" class="customData" enctype="multipart/form-data">
-            <!-- File Input -->
-            <label for="file-input" class="custom-file-upload">Choose a File</label>
-            <input type="file" id="file-input" name="files" onchange="updateFileNames()" multiple required>
-            <span id="file-name"></span>
-           
-            <!-- Client Dropdown -->
-            <label for="client">Client: </label>
-            <select name="client">
-                <option value="All">All</option>
-                <option value="Barclays">Barclays</option>
-                <option value="Bank of America Corp.">Bank of America Corp.</option>
-                <option value="Citi Group">Citi Group</option>
-                <option value="BofA">BofA</option>
-                <option value="Other">Other</option>
-            </select>
-        
-            <!-- Year Dropdown -->
-            <label for="year">Year: </label>
-            <select name="year">
-                <option value="All">All</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-                <option value="2026">2026</option>
-            </select>
-        
-            <!-- Month Dropdown -->
-            <label for="month">Month: </label>
-            <select name="month">
-                <option value="All">All</option>
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-            </select>
-        
-            <!-- Submit Button -->
-            <button type="submit">Filter</button>
-        </form>
-
-        <!-- Dsiplay filter options -->
-        <p class="text-center">Filtered for =>
-            Client: <strong>{{ selected_filters.client }}</strong>, 
-            Year: <strong>{{ selected_filters.year }}</strong>, 
-            Month: <strong>{{ selected_filters.month }}</strong>
-        </p>
-
-        <!-- Loading animation -->
-        <div id="loader" class="text-center" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
-            <img src="{{ url_for('static', filename='WSD-Loading-Animation.gif') }}" alt="Loading..." style="width: 80px; height: 80px;" />
-        </div>
-        
-
-        <!-- Display Total Filings -->
-        <h3 class="mt-4 text-center">Total Filings: 
-            {% if total_filings > 0 %}
-            {{ total_filings }}
-            {% endif %}
-        </h3>
-
-        <div class="row customData">
-            <div class="col-md-3">
-                <!-- Show Top 12 Filing Days -->
-                <h5 class="mt-4">Peak Filing Days</h5>               
-                <div class="table-responsive text-center">
-                    {{ top_days|safe }}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <!-- Show Lowest 12 Filing Days -->
-                <h5 class="mt-4">Quiet Filing Days</h5>
-               
-                    <div class="table-responsive text-center center-header">
-                        {{ lowest_days|safe }}
-                    </div>
-                
-            </div>
-            <div class="col-md-3">
-                <!-- Show Top Filing Months-->
-                <h5 class="mt-4">Top Filing Months</h5>
-                <div class="table-responsive text-center center-header">
-                    {{ top_months|safe }}
-                </div>
-            </div>
-        </div>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="login-status">
+      {% if session.get('username') %}
+        <p class="username">{{ session['username'] }}</p>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+      {% endif %}
     </div>
+    <div class="container mt-2">
+      <div class="header-container">
+        <h1>Client Filing Insights - WSD</h1>
+      </div>
+
+      <form method="POST" class="customData" enctype="multipart/form-data">
+        <!-- File Input -->
+        <label for="file-input" class="custom-file-upload">Choose a File</label>
+        <input
+          type="file"
+          id="file-input"
+          name="files"
+          onchange="updateFileNames()"
+          multiple
+          required
+        />
+        <span id="file-name"></span>
+
+        <!-- Client Dropdown -->
+        <label for="client">Client: </label>
+        <select name="client">
+          <option value="All">All</option>
+          <option value="Barclays">Barclays</option>
+          <option value="Bank of America Corp.">Bank of America Corp.</option>
+          <option value="Citi Group">Citi Group</option>
+          <option value="BofA">BofA</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <!-- Year Dropdown -->
+        <label for="year">Year: </label>
+        <select name="year">
+          <option value="All">All</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+        </select>
+
+        <!-- Month Dropdown -->
+        <label for="month">Month: </label>
+        <select name="month">
+          <option value="All">All</option>
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
+
+        <!-- Submit Button -->
+        <button type="submit">Filter</button>
+      </form>
+
+      <!-- Dsiplay filter options -->
+      <p class="text-center">
+        Filtered for => Client: <strong>{{ selected_filters.client }}</strong>,
+        Year: <strong>{{ selected_filters.year }}</strong>, Month:
+        <strong>{{ selected_filters.month }}</strong>
+      </p>
+
+      <!-- Loading animation -->
+      <div
+        id="loader"
+        class="text-center"
+        style="
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 9999;
+        "
+      >
+        <img
+          src="{{ url_for('static', filename='WSD-Loading-Animation.gif') }}"
+          alt="Loading..."
+          style="width: 80px; height: 80px"
+        />
+      </div>
+
+      <!-- Display Total Filings -->
+      <h3 class="mt-4 text-center">
+        Total Filings: {% if total_filings > 0 %} {{ total_filings }} {% endif
+        %}
+      </h3>
+
+      <div class="row customData">
+        <div class="col-md-3">
+          <!-- Show Top 12 Filing Days -->
+          <h5 class="mt-4">Peak Filing Days</h5>
+          <div class="table-responsive text-center">{{ top_days|safe }}</div>
+        </div>
+        <div class="col-md-3">
+          <!-- Show Lowest 12 Filing Days -->
+          <h5 class="mt-4">Quiet Filing Days</h5>
+
+          <div class="table-responsive text-center center-header">
+            {{ lowest_days|safe }}
+          </div>
+        </div>
+        <div class="col-md-3">
+          <!-- Show Top Filing Months-->
+          <h5 class="mt-4">Top Filing Months</h5>
+          <div class="table-responsive text-center center-header">
+            {{ top_months|safe }}
+          </div>
+        </div>
+      </div>
 
     <!-- Add Bootstrap JS Bundle -->
-    <script 
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoP4l2kuTWnrNxQ9bKpCchvjLTK2EipGYeGck5GoLdELT3N" 
-        crossorigin="anonymous">
-    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoP4l2kuTWnrNxQ9bKpCchvjLTK2EipGYeGck5GoLdELT3N"
+      crossorigin="anonymous"
+    ></script>
     <script>
-        function updateFileNames() {
-            var input = document.getElementById('file-input');
-            var fileList = input.files;
-            var fileNames = fileList.length > 0 ? Array.from(fileList).map(file => file.name).join(', ') : 'No files chosen';
-            document.getElementById('file-name').textContent = fileNames;
-        }
+      function updateFileNames() {
+        var input = document.getElementById("file-input");
+        var fileList = input.files;
+        var fileNames =
+          fileList.length > 0
+            ? Array.from(fileList)
+                .map((file) => file.name)
+                .join(", ")
+            : "No files chosen";
+        document.getElementById("file-name").textContent = fileNames;
+      }
 
-        // Show loader on form submission
-        document.querySelector("form").addEventListener("submit", function (e) {
-            // Show the loader
-            document.getElementById("loader").style.display = "block";
+      // Show loader on form submission
+      document.querySelector("form").addEventListener("submit", function (e) {
+        // Show the loader
+        document.getElementById("loader").style.display = "block";
 
-            // Set a minimum delay for the loader
-            setTimeout(function () {
-                // Submit the form after a 2-second delay
-                e.target.submit();
-            }, 2000); // 2000 ms = 2 seconds
+        // Set a minimum delay for the loader
+        setTimeout(function () {
+          // Submit the form after a 2-second delay
+          e.target.submit();
+        }, 2000); // 2000 ms = 2 seconds
 
-            // Prevent default submission for the delay
-            e.preventDefault();
-        });
+        // Prevent default submission for the delay
+        e.preventDefault();
+      });
     </script>
-            
-</body>
+  </body>
 </html>

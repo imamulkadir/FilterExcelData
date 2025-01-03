@@ -1,201 +1,263 @@
 /* General Styling */
 body {
-    background: #F0F7FF; /* Light gray-blue */
-    color: #333333; /* Dark gray for text */
-    font-family: "Ubuntu", serif;
-    font-weight: 400;
+  background: #f0f7ff; /* Light gray-blue */
+  color: #333333; /* Dark gray for text */
+  font-family: "Ubuntu", serif;
+  font-weight: 400;
 }
 
 .customData {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-label, button {
-    margin-left: 10px;
+label,
+button {
+  margin-left: 10px;
 }
 
-h5, h1 {
-    text-align: center;
+h5,
+h1 {
+  text-align: center;
 }
 
 h1 {
-    color: #FFFFFF; /* White text */
-    background: #5C88DA; /* Primary blue */
-    border-radius: 5px;
-    padding: 10px;
+  color: #ffffff; /* White text */
+  background: #5c88da; /* Primary blue */
+  border-radius: 5px;
+  padding: 10px;
 }
 
 h5 {
-    color: #333333; /* Dark gray */
+  color: #333333; /* Dark gray */
 }
 
 p {
-    margin-top: 10px;
-    font-style: italic;
-    color: #07131f;
-    opacity: 50%;
+  margin-top: 10px;
+  font-style: italic;
+  color: #07131f;
+  opacity: 50%;
 }
 
 #loader {
-    margin-top: 0px;
-    text-align: center;
+  margin-top: 0px;
+  text-align: center;
 }
-
 
 /* Buttons */
 button {
-    color: #FFFFFF; /* White text */
-    background-color: #5C88DA; /* Primary blue */
-    border: none; /* Slightly darker blue for borders */
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  color: #ffffff; /* White text */
+  background-color: #5c88da; /* Primary blue */
+  border: none; /* Slightly darker blue for borders */
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #FFA500; /* Accent orange */
-    border-color: #FF8C00; /* Darker orange */
+  background-color: #ffa500; /* Accent orange */
+  border-color: #ff8c00; /* Darker orange */
 }
 
 /* Inputs and Dropdowns */
-select, input, label {
-    padding: 10px;
-    border-radius: 5px;
-    margin: 0;
-    transition: all 0.3s ease;
+select,
+input,
+label {
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0;
+  transition: all 0.3s ease;
 }
 
 input[type="file"] {
-    display: none;
+  display: none;
 }
 
-select:focus, input:focus {
-    border-color: #0056B3; /* Primary blue on focus */
-    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5); /* Subtle blue glow */
+select:focus,
+input:focus {
+  border-color: #0056b3; /* Primary blue on focus */
+  box-shadow: 0 0 5px rgba(0, 86, 179, 0.5); /* Subtle blue glow */
 }
 
 /* Custom File Upload */
 .custom-file-upload {
-    border: 1px solid #CCCCCC;
-    background-color: #FFFFFF; /* White background */
-    padding: 10px 20px;
-    display: inline-block;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+  border: 1px solid #cccccc;
+  background-color: #ffffff; /* White background */
+  padding: 10px 20px;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 .custom-file-upload:hover {
-    background-color: #F0F7FF; /* Light gray-blue */
+  background-color: #f0f7ff; /* Light gray-blue */
 }
 
 #file-name {
-    padding-top: 10px;
-    margin-left: 2px;
-    font-size: 14px;
+  padding-top: 10px;
+  margin-left: 2px;
+  font-size: 14px;
 }
 
 /* Tables */
 .table-responsive {
-    background: #FFFFFF; /* White table background */
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background: #ffffff; /* White table background */
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 th {
-    background-color: #0056B3; /* Primary blue */
-    color: #FFFFFF; /* White text */
-    text-align: center;
-    padding: 10px;
+  background-color: #0056b3; /* Primary blue */
+  color: #ffffff; /* White text */
+  text-align: center;
+  padding: 10px;
 }
 
 tr:nth-child(even) {
-    background-color: #F7FAFD; /* Light gray-blue for even rows */
+  background-color: #f7fafd; /* Light gray-blue for even rows */
 }
 
 tr:nth-child(odd) {
-    background-color: #FFFFFF; /* White for odd rows */
+  background-color: #ffffff; /* White for odd rows */
 }
+
+.erroInfo {
+  width: 90%;
+  margin: 0 auto; /* Center horizontally */
+  text-align: center;
+  display: flex;
+  flex-direction: column; /* Ensure alerts stack vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+}
+
+.submitButton {
+  display: flex; /* Enables flexbox for alignment */
+  justify-content: center; /* Centers the button horizontally */
+}
+
+.submitButton .btn {
+  width: 50%; /* Sets the button width to 50% */
+}
+
+/* Position the login/logout status in the top-right corner */
+.login-status {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 16px;
+}
+
+.login-status a {
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+.login-status .logout-btn {
+  background-color: #dc3545;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.login-status .logout-btn:hover {
+  background-color: #c82333;
+}
+
+.username {
+  font: 800 16px "Ubuntu", sans-serif;
+}
+
 /* Enhanced Media Queries */
 
 /* Large screens (default styles are assumed for >1200px) */
 @media (max-width: 1200px) {
-    .customData {
-        flex-direction: row;
-        align-items: center;
-    }
-    button {
-        width: 40%;
-    }
+  .customData {
+    flex-direction: row;
+    align-items: center;
+  }
+  button {
+    width: 40%;
+  }
 }
 
 /* Tablets (max-width: 992px) */
 @media (max-width: 992px) {
-    h1 {
-        font-size: 1.8rem;
-    }
-    .customData {
-        gap: 10px;
-    }
-    select, input, label {
-        width: 70%;
-    }
+  h1 {
+    font-size: 1.8rem;
+  }
+  .customData {
+    gap: 10px;
+  }
+  select,
+  input,
+  label {
+    width: 70%;
+  }
 }
 
 /* Smaller tablets and large phones (max-width: 768px) */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 1.5rem;
-    }
-    label, select, input {
-        font-size: 14px;
-        padding: 6px;
-    }
-    button {
-        width: 50%;
-    }
-    .custom-file-upload {
-        padding: 8px 16px;
-    }
+  h1 {
+    font-size: 1.5rem;
+  }
+  label,
+  select,
+  input {
+    font-size: 14px;
+    padding: 6px;
+  }
+  button {
+    width: 50%;
+  }
+  .custom-file-upload {
+    padding: 8px 16px;
+  }
 }
 
 /* Mobile phones (max-width: 576px) */
 @media (max-width: 576px) {
-    h1 {
-        font-size: 1.25rem;
-    }
-    button {
-        width: 80%;
-        padding: 10px;
-    }
-    select, input, label {
-        font-size: 12px;
-    }
-    .table-responsive {
-        max-width: 100%;
-        overflow-x: auto;
-    }
+  h1 {
+    font-size: 1.25rem;
+  }
+  button {
+    width: 80%;
+    padding: 10px;
+  }
+  select,
+  input,
+  label {
+    font-size: 12px;
+  }
+  .table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+  }
 }
 
 /* Extra small devices (max-width: 480px) */
 @media (max-width: 480px) {
-    h1 {
-        font-size: 1rem;
-    }
-    label, select, input, button {
-        width: 90%;
-        font-size: 11px;
-    }
-    .custom-file-upload {
-        padding: 8px 12px;
-    }
-    .table-responsive {
-        margin-bottom: 5px;
-    }
+  h1 {
+    font-size: 1rem;
+  }
+  label,
+  select,
+  input,
+  button {
+    width: 90%;
+    font-size: 11px;
+  }
+  .custom-file-upload {
+    padding: 8px 12px;
+  }
+  .table-responsive {
+    margin-bottom: 5px;
+  }
 }

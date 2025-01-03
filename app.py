@@ -3,9 +3,54 @@ import pandas as pd
 from flask import Flask, render_template, request, flash
 from datetime import datetime
 import logging
+from flask import session, redirect, url_for
+
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Make sure to set a secure secret key
+
+# User credentials dictionary
+USERS = {
+    "imamul": "imamul",
+    "habib": "habib",
+    "user2": "secret"
+}
+
+# Login page route
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        # Validate credentials
+        if username in USERS and USERS[username] == password:
+            session["username"] = username  # Store the logged-in user in session
+            return redirect(url_for("index"))  # Redirect to the main page
+        else:
+            flash("Invalid username or password. Please try again.", "error")
+
+    return render_template("login.html")
+
+
+# Logout route
+@app.route("/logout")
+def logout():
+    session.pop("username", None)  # Remove the username from session
+    flash("You have been logged out.", "success")
+    return redirect(url_for("login"))
+
+
+# Protect routes (decorator for routes that require login)
+def login_required(func):
+    def wrapper(*args, **kwargs):
+        if "username" not in session:
+            flash("You need to log in first.", "error")
+            return redirect(url_for("login"))
+        return func(*args, **kwargs)
+    wrapper.__name__ = func.__name__
+    return wrapper
+
 
 # Error handler to catch all errors
 @app.errorhandler(Exception)
@@ -102,6 +147,7 @@ def process_files(file_paths, client, year, month):
 
 
 @app.route("/", methods=["GET", "POST"])
+@login_required
 def index():
     date_counts, top_days, lowest_days, top_months = pd.DataFrame(), pd.DataFrame(), pd.DataFrame(), pd.DataFrame()
     total_filings = 0
