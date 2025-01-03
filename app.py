@@ -95,7 +95,7 @@ def process_files(file_paths, client, year, month):
         all_dates = pd.to_datetime(df[date_columns].stack(), errors='coerce').dropna()
 
         # Exclude dates outside a reasonable range (e.g., between 1900 and the current year)
-        valid_date_range = (all_dates >= pd.Timestamp('2022-01-01')) & (all_dates <= pd.Timestamp.now())
+        valid_date_range = (all_dates >= pd.Timestamp('2020-01-01')) & (all_dates <= pd.Timestamp.now())
         all_dates = all_dates[valid_date_range]
 
         if all_dates.empty:
@@ -187,7 +187,7 @@ def index():
         lowest_days=lowest_days[['Date', 'Total Filings']].to_html(classes='table table-striped', index=False, header=False) if not lowest_days.empty else "",
         top_months=top_months.to_html(classes='table table-striped', index=False, header=False) if not top_months.empty else "",
         clients=["All", "Barclays", "Bank of America Corp.", "Citi Group", "BofA", "Other"],
-        years=["All", "2022", "2023", "2024", "2025", "2026"],
+        years=["All", "2020", "2021", "2022", "2023", "2024", "2025", "2026"],
         months=["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         selected_filters=selected_filters
     )
